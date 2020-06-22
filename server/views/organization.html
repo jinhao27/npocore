@@ -196,7 +196,7 @@
                         <small>Read More</small>
                       </button>
                     </div>
-                    <p><small class="type"><%= post.type %></small></p>
+                    <p><small style="background-color: <%= post.type.color %>" class="type"><%= post.type.name %></small></p>
                     <a style="background-color: <%= post.button.color %>;border-color: <%= post.button.color %>;" class="solid-cta-button" href="<%= post.button.link %>" target="_blank"><%= post.button.text %></a>
                   </div>
                 </div>

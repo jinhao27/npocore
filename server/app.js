@@ -13,7 +13,7 @@ const rateLimit = require("express-rate-limit");
 const { check, validationResult } = require('express-validator');
 const S3Strategy = require('express-fileuploader-s3');
 const AWS = require('aws-sdk');
-const { sendEmail } = require("./helper-functions");
+const { sendEmail, getPostTypeObject } = require("./helper-functions");
 const { organizationModel, postModel, passwordResetSessionModel } = require("./models");
 const { hourlyBump, postBump, featureBump, referralBump, hourlyDownBump, downBumpOrganizations } = require("./nposcore-functions");
 
@@ -308,7 +308,7 @@ app.route("/@:idName/post")
           link: req.body.buttonLink,
           color: req.body.buttonColor
         },
-        type: req.body.type
+        type: getPostTypeObject(req.body.type)
       };
 
       // SAVING IMAGE IF EXISTS
@@ -393,7 +393,7 @@ app.route("/@:idName/post/:id/edit")
           link: req.body.buttonLink,
           color: req.body.buttonColor
         },
-        type: req.body.type
+        type: getPostTypeObject(req.body.type)
       };
 
       // SAVING IMAGE IF EXISTS

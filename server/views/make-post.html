@@ -120,49 +120,69 @@
     </div>
   </body>
   <script>
-    const titleTextInput = document.getElementById("title-text-input");
-    const contentTextInput = document.getElementById("content-text-input");
-    const typeSelectInput = document.getElementById("type-select-input");
-    const ctaButtonTextInput = document.getElementById("cta-button-text-input");
-    const ctaButtonLinkInput = document.getElementById("cta-button-link-input");
-    const ctaButtonColorInput = document.getElementById("cta-button-color-input");
-    const ctaButtonColorLabel = document.getElementById("cta-button-color-label");
-
-    const ctaButtonDemo = document.getElementById("cta-button-demo");
-    const titleDemo = document.getElementById("title-demo");
-    const contentDemo = document.getElementById("content-demo");
-    const typeDemo = document.getElementById("type-demo");
-
-    ctaButtonDemo.style.border = "none";
-    updateDemos();
-
-    function updateDemos() {
-      // TITLE INPUT
-      titleDemo.innerHTML = titleTextInput.value || "[No title provided]";
-
-      // CONTENT INPUT
-      contentDemo.innerHTML = contentTextInput.value || "[No content provided]";
-
-      // TYPE INPUT
-      typeDemo.innerHTML = typeSelectInput.value || "Announcement";
-
-      // CTA BUTTON
-      ctaButtonDemo.innerHTML = ctaButtonTextInput.value || "[No text provided]";
-      ctaButtonDemo.href = ctaButtonLinkInput.value;
-      ctaButtonDemo.style.backgroundColor = ctaButtonColorInput.value;
-      ctaButtonColorLabel.innerHTML = ctaButtonColorInput.value;
+  const postTypes = {
+    "Announcement": {
+      name: "Announcement",
+      color: "#F2542D"
+    },
+    "Opportunity": {
+      name: "Opportunity",
+      color: "#00798C"
+    },
+    "Event": {
+      name: "Event",
+      color: "#1D263B"
+    },
+    "Job Opening": {
+      name: "Job Opening",
+      color: "#00B0F9"
     }
+  }
 
-    $("input").on("change keyup paste", function(){
-      updateDemos();
-    });
+  const titleTextInput = document.getElementById("title-text-input");
+  const contentTextInput = document.getElementById("content-text-input");
+  const typeSelectInput = document.getElementById("type-select-input");
+  const ctaButtonTextInput = document.getElementById("cta-button-text-input");
+  const ctaButtonLinkInput = document.getElementById("cta-button-link-input");
+  const ctaButtonColorInput = document.getElementById("cta-button-color-input");
+  const ctaButtonColorLabel = document.getElementById("cta-button-color-label");
 
-    $("textarea").on("change keyup paste", function(){
-      updateDemos();
-    });
+  const ctaButtonDemo = document.getElementById("cta-button-demo");
+  const titleDemo = document.getElementById("title-demo");
+  const contentDemo = document.getElementById("content-demo");
+  const typeDemo = document.getElementById("type-demo");
 
-    $("select").on("change keyup paste", function(){
-      updateDemos();
-    });
+  ctaButtonDemo.style.border = "none";
+  updateDemos();
+
+  function updateDemos() {
+    // TITLE INPUT
+    titleDemo.innerHTML = titleTextInput.value || "[No title provided]";
+
+    // CONTENT INPUT
+    contentDemo.innerHTML = contentTextInput.value || "[No content provided]";
+
+    // TYPE INPUT
+    typeDemo.innerHTML = typeSelectInput.value || "Announcement";
+    typeDemo.style.backgroundColor = postTypes[typeSelectInput.value || "Announcement"].color;
+
+    // CTA BUTTON
+    ctaButtonDemo.innerHTML = ctaButtonTextInput.value || "[No text provided]";
+    ctaButtonDemo.href = ctaButtonLinkInput.value;
+    ctaButtonDemo.style.backgroundColor = ctaButtonColorInput.value;
+    ctaButtonColorLabel.innerHTML = ctaButtonColorInput.value;
+  }
+
+  $("input").on("change keyup paste", function(){
+    updateDemos();
+  });
+
+  $("textarea").on("change keyup paste", function(){
+    updateDemos();
+  });
+
+  $("select").on("change keyup paste", function(){
+    updateDemos();
+  });
   </script>
 </html>

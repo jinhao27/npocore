@@ -83,7 +83,7 @@ function Organizations() {
 
   const filterPostsByType = (postsToFilter) => {
     if (filterType) {
-      return postsToFilter.filter(post => post.type.includes(filterType));
+      return postsToFilter.filter(post => post.type.name.includes(filterType));
     } else {
       return postsToFilter;
     }
@@ -135,7 +135,7 @@ function Organizations() {
                     <small>Read More</small>
                   </button>
                 </div>
-                <p><small className="type">{post.type}</small></p>
+                <p><small style={{ "backgroundColor": post.type.color }} className="type">{post.type.name}</small></p>
                 <a style={{ "backgroundColor": post.button.color || "#f28c41", "borderColor": post.button.color || "#f28c41" }} className="solid-cta-button" href={post.button.link || "#"} target="_blank">{post.button.text || "Button"}</a>
               </div>
             </div>
@@ -198,7 +198,7 @@ function Organizations() {
                     <small>Read More</small>
                   </button>
                 </div>
-                <p><small className="type">{post.type}</small></p>
+                <p><small style={{ "backgroundColor": post.type.color }} className="type">{post.type.name}</small></p>
                 <a style={{ "backgroundColor": post.button.color, "borderColor": post.button.color }} className="solid-cta-button" href={post.button.link} target="_blank">{post.button.text}</a>
               </div>
             </div>

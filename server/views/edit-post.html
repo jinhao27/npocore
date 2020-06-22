@@ -133,6 +133,25 @@
     </div>
   </body>
   <script>
+    const postTypes = {
+      "Announcement": {
+        name: "Announcement",
+        color: "#F2542D"
+      },
+      "Opportunity": {
+        name: "Opportunity",
+        color: "#00798C"
+      },
+      "Event": {
+        name: "Event",
+        color: "#1D263B"
+      },
+      "Job Opening": {
+        name: "Job Opening",
+        color: "#00B0F9"
+      }
+    }
+
     const titleTextInput = document.getElementById("title-text-input");
     const contentTextInput = document.getElementById("content-text-input");
     const typeSelectInput = document.getElementById("type-select-input");
@@ -158,6 +177,7 @@
 
       // TYPE INPUT
       typeDemo.innerHTML = typeSelectInput.value || "Announcement";
+      typeDemo.style.backgroundColor = postTypes[typeSelectInput.value || "Announcement"].color;
 
       // CTA BUTTON
       ctaButtonDemo.innerHTML = ctaButtonTextInput.value || "[No text provided]";

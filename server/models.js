@@ -43,7 +43,7 @@ const postModel = mongoose.model("Post", new mongoose.Schema({
   datetimePosted: Date,
   creator: Object,
   button: Object,
-  type: String,
+  type: Object,
   image: String
 }));
 
