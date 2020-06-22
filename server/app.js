@@ -121,6 +121,7 @@ app.route("/register")
     res.render("register.html", context={ blockElements, cookies: req.cookies, s3Link, googleApiKey, orgNames, error: "" });
   })
   .post(limiter, async (req, res) => {
+    req.body.name = req.body.name.trim();
     const data = req.body;
 
     // GET LOCATION COORDINATES
@@ -211,9 +212,11 @@ app.route("/register")
     data.bumpedInLastHour = false;
 
     const newOrganization = new organizationModel(data);
-    newOrganization.save((err, organization) => {
+    newOrganization.save(async (err, organization) => {
       if (err) {
-        res.render("register.html", context={ blockElements, cookies: req.cookies, s3Link, googleApiKey, error: "That organization name/email already exists. Please use a different one." });
+        const organizations = await organizationModel.find({});
+        const orgNames = organizations.map(organization => organization.name);
+        res.render("register.html", context={ blockElements, cookies: req.cookies, s3Link, googleApiKey, orgNames, error: "That organization name/email already exists. Please use a different one." });
       } else {
         res.cookie("organization", newOrganization);
         res.redirect(`/@${newOrganization.idName}`);
@@ -359,6 +362,7 @@ app.route("/@:idName/update")
     }
   })
   .post(limiter, async (req, res) => {
+    req.body.name = req.body.name.trim();
     // GET LOCATION COORDINATES
     let location = { name: req.body.location };
     if (req.body.location) {
