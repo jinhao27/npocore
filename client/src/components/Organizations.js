@@ -179,7 +179,7 @@ function Organizations() {
                       {organization.email ? <img src="/img/email.svg" alt="{organization.name} Email Address" /> : null}
                     </a>
                     <a href={"/@" + organization.idName}>
-                      <img style={{transform: "translateY(-2px)"}} src="/img/link.svg" alt="{organization.name}" />
+                      <img style={{transform: "translateY(-2px)"}} src="/img/external.svg" alt="{organization.name}" />
                     </a>
                   </div>
                 </div>
@@ -300,7 +300,7 @@ function Organizations() {
                       {organization.email ? <img src="/img/email.svg" alt="{organization.name} Email Address" /> : null}
                     </a>
                     <a href={"/@" + organization.idName}>
-                      <img style={{transform: "translateY(-2px)"}} src="/img/link.svg" alt="{organization.name}" />
+                      <img style={{transform: "translateY(-2px)"}} src="/img/external.svg" alt="{organization.name}" />
                     </a>
                   </div>
                 </div>

@@ -26,7 +26,7 @@ app.use(cookieParser())
 // Setting rate limit for express
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 15,
+  max: 10,
   message: "You've been making too many requests to the server. Please try again in 15 minutes."
 });
 
@@ -37,8 +37,8 @@ app.use(fileupload()); // FILES
 // app.use(expressSanitizer()); // EXPRESS INPUT SANTIZATION
 
 // AWS S3 CONFIGURATION
-const accessKeyId = process.env.ACCESS_KEY_ID;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const accessKeyId = process.env.ACCESS_KEY_ID || "AKIAZSHQMZHOLSD6IAGC";
+const secretAccessKey = process.env.SECRET_ACCESS_KEY || "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";
 const s3Link = "https://npocore.s3-us-west-2.amazonaws.com/";
 
 const s3 = new AWS.S3({
