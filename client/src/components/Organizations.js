@@ -175,7 +175,7 @@ function Organizations() {
                 <div className="organization-header">
                   <h4><a href={"/@" + organization.idName}>{organization.name}</a></h4>
                   <div className="organization-resources">
-                    <a href="mailto:{organization.email}" target="_">
+                    <a href={"mailto:"  + organization.email} target="_">
                       {organization.email ? <img src="/img/email.svg" alt="{organization.name} Email Address" /> : null}
                     </a>
                     <a href={"/@" + organization.idName}>
@@ -296,7 +296,7 @@ function Organizations() {
                 <div className="organization-header">
                   <h4><a style={{ color: "black" }} href={"/@" + organization.idName}>{organization.name}</a></h4>
                   <div className="organization-resources">
-                    <a href="mailto:{organization.email}" target="_">
+                    <a href={"mailto:" + organization.email} target="_">
                       {organization.email ? <img src="/img/email.svg" alt="{organization.name} Email Address" /> : null}
                     </a>
                     <a href={"/@" + organization.idName}>
