@@ -169,14 +169,21 @@
               <% for (post of posts) { %>
                 <div class="post" id="<%= post._id %>">
                   <% if (post.image) { %>
-                    <img class="post-image" src="<%= s3Link %><%= post.image %>" alt="">
+                    <div class="post-header">
+                      <img class="post-header-image" src="<%= s3Link + post.image %>" alt=""/>
+                    </div>
                   <% } %>
                   <div class="p-3">
                     <h3>
                       <%= post.title %>
                       <% if (cookies.organization) { %>
                         <% if (cookies.organization.idName == organization.idName) { %>
-                          <button style="font-size: 30px; line-height: 1; float: right; padding: 0;" class="btn" id="x" onclick="deletePost('<%= post._id %>')">&times;</button>
+                          <div style="float: right;">
+                            <a href="/@<%= organization.idName %>/post/<%= post._id %>/edit">
+                              <img style="transform: translateY(2px); width: 20px;" src="/static/img/icons/edit.svg" alt="">
+                            </a>
+                            <button style="font-size: 30px; line-height: 1; padding: 0;" class="btn" id="x" onclick="deletePost('<%= post._id %>')">&times;</button>
+                          </div>
                         <% } %>
                       <% } %>
                     </h3>

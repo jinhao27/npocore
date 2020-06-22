@@ -62,7 +62,7 @@
       <div class="post">
         <% if (post.image) { %>
           <div class="post-header">
-            <img class="post-header-image" src={"https://npocore.s3-us-west-2.amazonaws.com/" + post.image} alt=""/>
+            <img class="post-header-image" src="<%= s3Link + post.image %>" alt=""/>
           </div>
         <% } %>
         <div class="p-3">

@@ -53,7 +53,6 @@ const uploadFile = (file) => {
       Key: file.name,
       Body: file.data
   };
-  console.log(params);
   s3.upload(params, (err, data) => { if (err) throw err; });
 };
 
@@ -261,7 +260,7 @@ app.route("/@:idName")
     const organization = await organizationModel.findOne({ idName: req.params.idName });
 
     if (organization) {
-      const posts = await postModel.find({ "creator.idName": organization.idName });
+      const posts = await postModel.find({ "creator.idName": organization.idName }).sort({ datetimePosted: -1 });
       res.render("organization.html", context={ blockElements, cookies: req.cookies, s3Link, organization, posts });
     } else {
       res.render("errors/organization.html", context={ blockElements, cookies: req.cookies, s3Link });
@@ -356,8 +355,7 @@ app.route("/@:idName/post")
     }
   });
 
-app.route("/@:idName/post/:id")
-  .get(async (req, res) => {
+app.get("/@:idName/post/:id", async (req, res) => {
     postModel.findOne({ _id: req.params.id }, (err, post) => {
       if (err || !post) {
         res.render("errors/post.html", context={ blockElements, cookies: req.cookies, s3Link });
@@ -365,7 +363,73 @@ app.route("/@:idName/post/:id")
 
       res.render("post.html", context={ blockElements, cookies: req.cookies, s3Link, post });
     });
+  });
+
+app.route("/@:idName/post/:id/edit")
+  .get((req, res) => {
+    if (req.cookies.organization && req.params.idName == req.cookies.organization.idName) {
+      postModel.findOne({ _id: req.params.id }, (err, post) => {
+        if (err || !post) {
+          res.render("errors/post.html", context={ blockElements, cookies: req.cookies, s3Link });
+        }
+
+        res.render("edit-post.html", context={ blockElements, cookies: req.cookies, s3Link, post });
+      });
+    } else {
+      res.render("errors/permission.html", context={ blockElements, cookies: req.cookies, s3Link });
+    }
   })
+  .post(limiter, (req, res) => {
+    // MAKE SURE USER IS LOGGED INTO THIS ORG
+    if (req.cookies.organization && req.params.idName == req.cookies.organization.idName) {
+      // CREATE POST
+      const post = {
+        title: req.body.title,
+        content: req.body.content,
+        datetimePosted: new Date(),
+        creator: req.cookies.organization,
+        button: {
+          text: req.body.buttonText,
+          link: req.body.buttonLink,
+          color: req.body.buttonColor
+        },
+        type: req.body.type
+      };
+
+      // SAVING IMAGE IF EXISTS
+      if (req.files) {
+        const image = req.files.image;
+
+        if (image) {
+          // VALIDATING FILE TYPE
+          const fileExtension = image.name.split(".")[1];
+          if (imageFileExtensions.includes(fileExtension)) {
+            image.name = uuidv4() + "." + fileExtension;
+            uploadFile(image); // UPLOAD TO S3
+            post.image = image.name;
+          } else {
+            res.send("Invalid image file input.");
+            return;
+          }
+        }
+      }
+
+      postModel.findOneAndUpdate(
+        { _id: req.params.id },
+        post,
+        { new: true },
+        (err, post) => {
+          if (err) {
+            res.send("There's been an error when editing your post.")
+          } else {
+            res.redirect(`/@${req.cookies.organization.idName}`);
+          }
+        }
+      )
+    } else {
+      res.render("errors/permission.html", context={ blockElements, cookies: req.cookies, s3Link });
+    }
+  });
 
 app.route("/@:idName/update")
   .get(async (req, res) => {
