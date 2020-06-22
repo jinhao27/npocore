@@ -120,19 +120,7 @@ app.route("/register")
     const orgNames = organizations.map(organization => organization.name);
     res.render("register.html", context={ blockElements, cookies: req.cookies, s3Link, googleApiKey, orgNames, error: "" });
   })
-  .post(limiter, [
-    check('name').isLength({ max: 50 }).trim().escape(),
-    check('email').isLength({ max: 50 }).isEmail().trim().escape(),
-    check('description').isLength({ max: 300 }).trim().escape(),
-    check('location').isLength({ max: 200 }).trim().escape(),
-    check('referrer').isLength({ max: 50 }).trim().escape(),
-    check('logo').trim().escape(),
-    check('instagram').isLength({ max: 100 }),
-    check('facebook').isLength({ max: 100 }),
-    check('twitter').isLength({ max: 100 }),
-    check('linkedin').isLength({ max: 100 }),
-    check('website').isLength({ max: 100 })
-  ], async (req, res) => {
+  .post(limiter, async (req, res) => {
     const data = req.body;
 
     // GET LOCATION COORDINATES
@@ -237,9 +225,7 @@ app.route("/login")
   .get((req, res) => {
     res.render("login.html", context={ blockElements, cookies: req.cookies, s3Link, error: "" });
   })
-  .post(limiter, [
-    check('email').isEmail().trim().escape()
-  ], async (req, res) => {
+  .post(limiter, async (req, res) => {
     const organization = await organizationModel.findOne({ email: req.body.email });
 
     if (organization) {
@@ -275,9 +261,7 @@ app.route("/@:idName")
       res.render("errors/organization.html", context={ blockElements, cookies: req.cookies, s3Link });
     }
   })
-  .post(limiter, [
-    check('email').isEmail().trim().escape()
-  ], async (req, res) => {
+  .post(limiter, async (req, res) => {
     const email = req.body.email;
     const organizationIdName = req.params.idName;
 
@@ -305,12 +289,7 @@ app.route("/@:idName/post")
       res.render("errors/permission.html", context={ blockElements, cookies: req.cookies, s3Link });
     }
   })
-  .post(limiter, [
-    check('title').isLength({ max: 50 }).trim().escape(),
-    check('content').isLength({ max: 500 }).trim().escape(),
-    check('buttonText').isLength({ max: 20 }).trim().escape(),
-    check('buttonLink').isLength({ max: 100 }).trim().escape()
-  ], (req, res) => {
+  .post(limiter, (req, res) => {
     // MAKE SURE USER IS LOGGED INTO THIS ORG
     if (req.cookies.organization && req.params.idName == req.cookies.organization.idName) {
       // CREATE POST
@@ -379,19 +358,7 @@ app.route("/@:idName/update")
       res.render("errors/permission.html", context={ blockElements, cookies: req.cookies, s3Link });
     }
   })
-  .post(limiter, [
-    check('name').isLength({ max: 50 }).trim().escape(),
-    check('email').isLength({ max: 50 }).isEmail().trim().escape(),
-    check('description').isLength({ max: 300 }).trim().escape(),
-    check('location').isLength({ max: 200 }).trim().escape(),
-    check('referrer').isLength({ max: 50 }).trim().escape(),
-    check('logo').trim().escape(),
-    check('instagram').isLength({ max: 100 }),
-    check('facebook').isLength({ max: 100 }),
-    check('twitter').isLength({ max: 100 }),
-    check('linkedin').isLength({ max: 100 }),
-    check('website').isLength({ max: 100 })
-  ], async (req, res) => {
+  .post(limiter, async (req, res) => {
     // GET LOCATION COORDINATES
     let location = { name: req.body.location };
     if (req.body.location) {
