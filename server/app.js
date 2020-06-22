@@ -356,6 +356,17 @@ app.route("/@:idName/post")
     }
   });
 
+app.route("/@:idName/post/:id")
+  .get(async (req, res) => {
+    postModel.findOne({ _id: req.params.id }, (err, post) => {
+      if (err || !post) {
+        res.render("errors/post.html", context={ blockElements, cookies: req.cookies, s3Link });
+      }
+
+      res.render("post.html", context={ blockElements, cookies: req.cookies, s3Link, post });
+    });
+  })
+
 app.route("/@:idName/update")
   .get(async (req, res) => {
     // MAKE SURE USER IS LOGGED INTO THIS ORG

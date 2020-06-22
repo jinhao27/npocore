@@ -125,7 +125,7 @@ function Organizations() {
                 <span></span>
               }
               <div className="p-3">
-                <h3>{post.title}</h3>
+                <h3><a href={`/@${post.creator.idName}/post/${post._id}`}>{post.title}</a></h3>
                 <strong>By: <a href={"/@" + post.creator.idName}>{post.creator.name}</a></strong>
                 <br/>
                 <small>Posted: { new Date(post.datetimePosted).toLocaleDateString("en-US") }</small>
@@ -188,7 +188,7 @@ function Organizations() {
                 <span></span>
               }
               <div className="p-3">
-                <h3>{post.title}</h3>
+                <h3><a href={`/@${post.creator.idName}/post/${post._id}`}><a href={`/@${post.creator.idName}/post/${post._id}`}>{post.title}</a></a></h3>
                 <strong>By: <a href={"/@" + post.creator.idName}>{post.creator.name}</a></strong>
                 <br/>
                 <small>Posted: { new Date(post.datetimePosted).toLocaleDateString("en-US") }</small>
