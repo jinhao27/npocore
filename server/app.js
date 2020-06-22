@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const fileupload = require("express-fileupload");
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require('uuid');
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
 const passwordHash = require('password-hash');
@@ -52,6 +53,7 @@ const uploadFile = (file) => {
       Key: file.name,
       Body: file.data
   };
+  console.log(params);
   s3.upload(params, (err, data) => { if (err) throw err; });
 };
 
@@ -146,6 +148,7 @@ app.route("/register")
         // VALIDATING FILE TYPE
         const fileExtension = logo.name.split(".")[1];
         if (imageFileExtensions.includes(fileExtension)) {
+          logo.name = uuidv4() + "." + fileExtension;
           uploadFile(logo); // UPLOAD TO S3
           data.logo = logo.name;
         } else {
@@ -317,6 +320,7 @@ app.route("/@:idName/post")
           // VALIDATING FILE TYPE
           const fileExtension = image.name.split(".")[1];
           if (imageFileExtensions.includes(fileExtension)) {
+            image.name = uuidv4() + "." + fileExtension;
             uploadFile(image); // UPLOAD TO S3
             post.image = image.name;
           } else {
@@ -417,6 +421,7 @@ app.route("/@:idName/update")
           // VALIDATING FILE TYPE
           const fileExtension = logo.name.split(".")[1];
           if (imageFileExtensions.includes(fileExtension)) {
+            logo.name = uuidv4() + "." + fileExtension;
             uploadFile(logo); // UPLOAD TO S3
             updateObject.logo = logo.name;
           } else {
