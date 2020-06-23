@@ -60,7 +60,7 @@ function Organizations() {
     filteredOrganizations = filterOrganizationsByCause(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
-    return [... new Set(filteredOrganizations)];
+    return [...new Set(filteredOrganizations)];
   }
 
   const filterOrganizationsBySearch = (organizationsToFilter) => {
