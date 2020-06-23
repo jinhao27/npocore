@@ -18,8 +18,8 @@ function Organizations() {
     const fetchPosts = async () => {
       const request = await fetch(`/api/get-posts?skip=${posts.length}`)
       const postsJson = await request.json()
-      setPosts(posts => ([...posts, ...postsJson]));
-      setBasePosts(basePosts => ([...basePosts, ...postsJson]));
+      setPosts(posts => filterPipeline([...posts, ...postsJson]));
+      setBasePosts(basePosts => filterPipeline([...basePosts, ...postsJson]));
     }
 
     fetchPosts();
@@ -45,18 +45,19 @@ function Organizations() {
   }, []);
 
   useEffect(() => {
-    filterPipeline();
+    const filteredPosts = filterPipeline(basePosts);
+    setPosts(filteredPosts);
   }, [filterTitleSearchText, filterContentSearchText, filterType]);
 
   // FILTERING FUNCTIONS
-  const filterPipeline = () => {
-    let filteredPosts = basePosts;
+  const filterPipeline = (posts) => {
+    let filteredPosts = posts;
 
     filteredPosts = filterPostsByTitleSearch(filteredPosts);
     filteredPosts = filterPostsByContentSearch(filteredPosts);
     filteredPosts = filterPostsByType(filteredPosts);
 
-    setPosts(filteredPosts);
+    return filteredPosts.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
   }
 
   const filterPostsByTitleSearch = (postsToFilter) => {

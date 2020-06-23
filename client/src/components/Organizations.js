@@ -52,10 +52,6 @@ function Organizations() {
   }, [skip]);
 
   // FILTERING FUNCTIONS
-  function uniq(array) {
-    return Array.from(new Set(array));
-  }
-
   const filterPipeline = (organizations) => {
     let filteredOrganizations = organizations;
 
