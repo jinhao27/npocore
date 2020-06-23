@@ -57,6 +57,9 @@ function Organizations() {
     filteredPosts = filterPostsByContentSearch(filteredPosts);
     filteredPosts = filterPostsByType(filteredPosts);
 
+    console.log(filteredPosts);
+    console.log(filteredPosts.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i))
+
     return filteredPosts.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
   }
 
