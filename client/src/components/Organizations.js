@@ -10,46 +10,16 @@ function Organizations() {
   const [showFilters, setShowFilters] = useState(false);
 
   // FILTERS
+  const [filtering, setFiltering] = useState(false);
   const [filterSearchText, setFilterSearchText] = useState("");
   const [filterTargetAudience, setFilterTargetAudience] = useState("");
   const [filterCause, setFilterCause] = useState("");
   const [filterInterest, setFilterInterest] = useState("");
 
-  const getOrganizations = async () => {
-    // SAVE MONGODB ORGS TO PROPS
-    fetch("/api/get-organizations",{
-        method: 'GET',
-        mode: "no-cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {"Content-Type": "application/json"}
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((organizations) => {
-        setOrganizations(organizations);
-        setBaseOrganizations(organizations);
-
-        // GETTING FEATURED ORGANIZATIONS
-        const featuredOrganizationsArray = organizations.filter(organization => organization.featured == true);
-        setFeaturedOrganizations(featuredOrganizationsArray);
-      })
-      .catch((err) => {
-          console.log("Exception:", err);
-      });
-  }
-
   useEffect(() => {
-    const fetchOrganizations = async () => {
-      const request = await fetch(`/api/get-organizations?skip=${organizations.length}`)
-      const organizationsJson = await request.json()
-      setOrganizations(organizations => ([...organizations, ...organizationsJson]));
-      setBaseOrganizations(baseOrganizations => ([...baseOrganizations, ...organizationsJson]));
-    }
-
-    fetchOrganizations();
-  }, [skip]);
+    const filteredOrganizations = filterPipeline(baseOrganizations);
+    setOrganizations(filteredOrganizations);
+  }, [filterSearchText, filterTargetAudience, filterCause, filterInterest]);
 
   useEffect(() => {
     const handleScroll = (e) => {
@@ -71,19 +41,27 @@ function Organizations() {
   }, []);
 
   useEffect(() => {
-    filterPipeline();
-  }, [filterSearchText, filterTargetAudience, filterCause, filterInterest]);
+    const fetchOrganizations = async () => {
+      const request = await fetch(`/api/get-organizations?skip=${organizations.length}`)
+      const organizationsJson = await request.json()
+      setOrganizations(organizations => filterPipeline([...organizations, ...organizationsJson]));
+      setBaseOrganizations(baseOrganizations => filterPipeline([...baseOrganizations, ...organizationsJson]));
+    }
+
+    fetchOrganizations();
+  }, [skip]);
 
   // FILTERING FUNCTIONS
-  const filterPipeline = () => {
-    let filteredOrganizations = baseOrganizations;
+  const filterPipeline = (organizations) => {
+    console.log("pipeline")
+    let filteredOrganizations = organizations;
 
     filteredOrganizations = filterOrganizationsBySearch(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByTargetAudience(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByCause(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
-    setOrganizations(filteredOrganizations);
+    return filteredOrganizations;
   }
 
   const filterOrganizationsBySearch = (organizationsToFilter) => {
