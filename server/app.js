@@ -519,6 +519,19 @@ app.route("/@:idName/update")
           }
         }
       )
+
+      // UPDATING ALL POSTS
+      const posts = await postModel.find({ "creator._id": req.cookies.organization._id }).sort({ datetimePosted: -1 });
+      for (post of posts) {
+        postModel.findOneAndUpdate(
+          { _id: post._id },
+          { creator: updateObject },
+          { new: true },
+          (err, post) => {
+            if (err) throw err;
+          }
+        )
+      }
     } else {
       res.render("errors/permission.html", context={ blockElements, cookies: req.cookies, s3Link });
     }

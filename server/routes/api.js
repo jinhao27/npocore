@@ -26,7 +26,7 @@ module.exports = function(app) {
 
   app.get("/api/get-posts", async (req, res) => {
     const skip = req.query.skip && /^\d+$/.test(req.query.skip) ? Number(req.query.skip) : 0
-    const posts = await postModel.find({}, undefined, { skip, limit: 5 }).sort({ datetimePosted: -1 });
+    let posts = await postModel.find({}, undefined, { skip, limit: 5 }).sort({ datetimePosted: -1 });
     res.send(posts);
   });
 
