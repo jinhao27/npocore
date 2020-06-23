@@ -64,11 +64,6 @@ function Organizations() {
     filteredOrganizations = filterOrganizationsByCause(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
-    console.log(filteredOrganizations == uniq(filteredOrganizations))
-    console.log(filteredOrganizations);
-    console.log(uniq(filteredOrganizations));
-    console.log(filteredOrganizations.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i));
-
     return filteredOrganizations.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i);
   }
 
