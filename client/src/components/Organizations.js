@@ -53,7 +53,6 @@ function Organizations() {
 
   // FILTERING FUNCTIONS
   const filterPipeline = (organizations) => {
-    console.log("pipeline")
     let filteredOrganizations = organizations;
 
     filteredOrganizations = filterOrganizationsBySearch(filteredOrganizations);
@@ -61,7 +60,7 @@ function Organizations() {
     filteredOrganizations = filterOrganizationsByCause(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
-    return filteredOrganizations;
+    return [... new Set(filteredOrganizations)];
   }
 
   const filterOrganizationsBySearch = (organizationsToFilter) => {
