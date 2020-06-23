@@ -67,8 +67,9 @@ function Organizations() {
     console.log(filteredOrganizations == uniq(filteredOrganizations))
     console.log(filteredOrganizations);
     console.log(uniq(filteredOrganizations));
+    console.log(filteredOrganizations.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i));
 
-    return uniq(filteredOrganizations);
+    return filteredOrganizations.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i);
   }
 
   const filterOrganizationsBySearch = (organizationsToFilter) => {
