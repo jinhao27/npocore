@@ -52,6 +52,10 @@ function Organizations() {
   }, [skip]);
 
   // FILTERING FUNCTIONS
+  function uniq(array) {
+    return Array.from(new Set(array));
+  }
+
   const filterPipeline = (organizations) => {
     let filteredOrganizations = organizations;
 
@@ -60,7 +64,9 @@ function Organizations() {
     filteredOrganizations = filterOrganizationsByCause(filteredOrganizations);
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
-    return [...new Set(filteredOrganizations)];
+    console.log(filteredOrganizations == uniq(filteredOrganizations))
+
+    return uniq(filteredOrganizations);
   }
 
   const filterOrganizationsBySearch = (organizationsToFilter) => {
