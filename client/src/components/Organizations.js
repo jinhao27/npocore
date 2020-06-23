@@ -65,6 +65,8 @@ function Organizations() {
     filteredOrganizations = filterOrganizationsByInterest(filteredOrganizations);
 
     console.log(filteredOrganizations == uniq(filteredOrganizations))
+    console.log(filteredOrganizations);
+    console.log(uniq(filteredOrganizations));
 
     return uniq(filteredOrganizations);
   }
