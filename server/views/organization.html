@@ -110,7 +110,7 @@
 
               <% if (cookies.organization) { %>
                 <% if (cookies.organization) { %>
-                  <p class="mb-0"><strong>NPO Score:</strong> <%= organization.npoScore.toFixed(2) %></p>
+                  <p class="mb-0"><strong>NPO Score:</strong> <span id="points"><%= organization.npoScore.toFixed(2) %></span></p>
                   <small><a href="/news/what-is-a-npo-score" target="_blank">What is a NPO Score?</a></small>
                 <% } %>
               <% } %>
@@ -256,6 +256,13 @@
       // SWITCH OUT BUTTON WITH DISABLED ONE
       document.getElementById("bump").style.display = "none";
       document.getElementById("disabledBump").style.display = "inline-block";
+      var bumped = organization["npoScore"]*1.01;
+      if (bumped > 100){
+        document.getElementById("points").innerHTML = 100;
+      }else{
+        document.getElementById("points").innerHTML = Math.trunc(bumped);
+      }
+      
     }
 
     function readMore(buttonId) {
