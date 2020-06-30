@@ -70,7 +70,7 @@
           <strong>By: <a href="/@<%= post.creator.idName %>"><%= post.creator.name %></a></strong>
           <br/>
           <small>Posted: <%= post.datetimePosted.toLocaleDateString("en-US") %></small>
-          <p class="post-content mt-3 mb-3"><%= post.content %></p>
+          <p class="mt-3 mb-3"><%= post.content %></p>
           <p><small style="background-color: <%= post.type.color %>" class="type"><%= post.type.name %></small></p>
           <a style="backgroundColor: <%= post.button.color || '#f28c41' %>; borderColor: <%= post.button.color || '#f28c41' %>" class="solid-cta-button" href="<%= post.button.link || '#' %>" target="_blank"><%= post.button.text || "Button" %></a>
         </div>
