@@ -228,8 +228,8 @@ function Organizations() {
               <option value="Female Empowerment">Female Empowerment</option>
               <option value="Health">Health</option>
               <option value="Homeless and Housing">Homeless and Housing</option>
-              <option value="Politics">Politics</option>
               <option value="LGBTQ+">LGBTQ+</option>
+              <option value="Politics">Politics</option>
               <option value="Race and Ethnicity">Race and Ethnicity</option>
               <option value="Poverty Alleviation">Poverty Alleviation</option>
               <option value="Science and Technology">Science and Technology</option>
